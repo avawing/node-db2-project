@@ -4,16 +4,16 @@ exports.up = function(knex, Promise) {
       //creates id
       tbl.increments();
       //VIN (number)
-      tbl.text("vin", 17).unique().notNullable();
-      //make (text)
-      tbl.text("make").notNullable();
-      //model (text)
-      tbl.text("model").notNullable();
+      tbl.string("vin", 17).unique().notNullable();
+      //make (string)
+      tbl.string("make").notNullable();
+      //model (string)
+      tbl.string("model").notNullable();
       //mileage (number)
       tbl.float("mileage", 9).notNullable();
-      //transmission type - optional (text)
-      tbl.text("transmission");
-      //status of title - optional (text)
+      //transmission type - optional (string)
+      tbl.string("transmission");
+      //status of title - optional (string)
       tbl.text("title");
   })
 };
