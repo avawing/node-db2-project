@@ -9,7 +9,7 @@ module.exports = {
     },
     useNullAsADefault: true,
     migrations: {
-      directory: './migrations/cars.js'
+      directory: './migrations/'
     }
   },
 
