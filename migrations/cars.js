@@ -3,7 +3,7 @@ exports.up = function (knex, Promise) {
     //creates id
     tbl.increments();
     //VIN (number)
-    tbl.string("vin", 17).unique().notNullable();
+    tbl.string("vin", 17).notNullable();
     //make (string)
     tbl.string("make").notNullable();
     //model (string)

@@ -26,6 +26,23 @@ server.get("/cars", (req, res) => {
       res.status(500).json({ message: "Server is very wrong" }).end();
     });
 });
+
+server.get("/cars/:id", (req, res)=>{
+    const id = req.params.id;
+    db("cars")
+      .where({ id })
+      .then((car) => {
+          if(car){
+            res.status(201).json({data: car}).end();
+          }else{
+              res.status(404).json({message: 'Car not found'}).end()
+          }
+        
+      })
+      .catch((err) =>
+        res.status(500).json({ message: "You fucked up" }).end()
+      )
+})
 server.post("/cars", (req, res) => {
 
   db("cars").insert(req.body)
@@ -38,16 +55,44 @@ server.post("/cars", (req, res) => {
             res.status(201).json(car).end();
           })
           .catch((err) =>
-            res.status(500).json({ message: "server fucked up" }).end()
+            res.status(400).json({ message: "You fucked up" }).end()
           );
       } else {
-        res.status(400).json({ mesage: "Bad Request" }).end();
+        res.status(500).json({ mesage: "Server fucked up" }).end();
       }
     })
     .catch((err) =>
       res.status(500).json({ message: "Server REALLY fucked up" }).end()
     );
 });
+
+server.put('/cars/:id', (req, res)=>{
+    const id = req.params.id;
+    const update = req.body;
+    db("cars")
+      .where({ id })
+      .update(update)
+      .then((car) => {
+          if(car){
+              db("cars")
+              .where({id})
+              .then(car => {
+                res.status(201).json({data: car}).end();
+              })
+              .catch(err => {
+                  res.status(400).json({message: "bad request"}).end();
+              })
+            
+          }else{
+              res.status(404).json({message: 'Car not found'}).end()
+          }
+        
+      })
+      .catch((err) =>
+        res.status(500).json({ message: "You fucked up" }).end()
+      )
+})
+
 const PORT = process.env.PORT || 4000;
 server.listen(PORT, () => {
   console.log("server is running");
